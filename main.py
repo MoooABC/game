@@ -56,7 +56,7 @@ while True:
     ui_manager.draw_ui(screen)
 
     keys = pygame.key.get_pressed()
-    player.handle_movement(keys)
+    player.handle_movement(keys, W,H)
     player.draw(screen)
 
     for e in enemies:
