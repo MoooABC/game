@@ -1,13 +1,28 @@
 import pygame, sys, time, pygame_gui
 
 from player import Player
-from very_stupid_enemy import very_stupid_enemy
 from game_over import game_over
+from very_stupid_enemy import very_stupid_enemy
+from stupid_enemy import stupid_enemy
 
-pygame.init()
+player = None
+enemies = None
+start_time = None
 W, H = 800, 600
-screen = pygame.display.set_mode((W, H))
-pygame.display.set_caption("(-:")
+screen = None
+
+def reset():
+    global player, enemies, start_time, W, H, screen
+    pygame.init()
+    screen = pygame.display.set_mode((W, H))
+    pygame.display.set_caption("(-:")
+    player = Player(W/2, H/2, 10, 5)
+    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(5)] + \
+              [very_stupid_enemy.generate_enemy(W, H) for _ in range(20)]
+    start_time = time.time()
+
+reset()
+
 
 ui_manager = pygame_gui.UIManager(
     (800, 600),
@@ -20,17 +35,7 @@ label_time = pygame_gui.elements.UILabel(
 )
 
 clock = pygame.time.Clock()
-player = None
-enemies = None
-start_time = None
 
-def reset():
-    global player, enemies, start_time
-    player = Player(W/2, H/2, 10, 5)
-    enemies = [very_stupid_enemy.generate_enemy(W, H) for _ in range(40)]
-    start_time = time.time()
-
-reset()
 while True:
     time_delta = clock.tick(60) / 1000.0
     player.reset_for_next_frame()
@@ -51,11 +56,15 @@ while True:
     ui_manager.draw_ui(screen)
 
     keys = pygame.key.get_pressed()
-    player.handel_movement(keys)
+    player.handle_movement(keys)
     player.draw(screen)
 
     for e in enemies:
-        e.handel_movement()
+        match e.type:
+            case "very_stupid_enemy":
+                e.handle_movement()
+            case "stupid_enemy":
+                e.handle_movement(player)
         if (e.check_collision_with_player(player)):
             game_over(time.time()-start_time)
             reset()
@@ -63,9 +72,12 @@ while True:
         e.draw(screen)
         if e.update(screen) == -1:
             enemies.remove(e)
+            match e.type:
+                case "very_stupid_enemy":
+                    enemies.append(very_stupid_enemy.generate_enemy(W, H))
+                case "stupid_enemy":
+                    enemies.append(stupid_enemy.generate_enemy(W, H))
             del e
-            enemies.append(very_stupid_enemy.generate_enemy(W, H))
-
 
     pygame.display.flip()
     pygame.display.update()

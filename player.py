@@ -10,7 +10,7 @@ class Player:
     def reset_for_next_frame(self):
         self.movement = pygame.math.Vector2()
 
-    def handel_movement(self, pressed_keys):
+    def handle_movement(self, pressed_keys):
         if pressed_keys[pygame.K_LEFT] or pressed_keys[pygame.K_a]:
             self.movement.x -= self.SPEED
         if pressed_keys[pygame.K_RIGHT] or pressed_keys[pygame.K_d]:

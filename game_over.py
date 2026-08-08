@@ -32,7 +32,7 @@ def game_over(time):
     is_running = True
 
     while is_running:
-        time_delta = clock.tick(60) / 1000.0
+        time_delta = clock.tick(10) / 1000.0
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
