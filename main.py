@@ -16,9 +16,9 @@ def reset():
     pygame.init()
     screen = pygame.display.set_mode((W, H))
     pygame.display.set_caption("(-:")
-    player = Player(W/2, H/2, 10, 5)
-    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(5)] + \
-              [very_stupid_enemy.generate_enemy(W, H) for _ in range(20)]
+    player = Player(W/2, H/2, 40, 10)
+    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(10)] + \
+              [very_stupid_enemy.generate_enemy(W, H) for _ in range(40)]
     start_time = time.time()
 
 reset()
@@ -57,7 +57,7 @@ while True:
 
     keys = pygame.key.get_pressed()
     player.handle_movement(keys, W,H)
-    player.draw(screen)
+    player.draw(screen, time_delta)
 
     for e in enemies:
         match e.type:
