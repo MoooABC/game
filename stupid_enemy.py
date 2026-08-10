@@ -15,7 +15,7 @@ class stupid_enemy(enemy):
         self.SPEED = speed
         self.movement = pygame.math.Vector2()
 
-        self._timePerFrame = 0.07
+        self._timer_per_frame = 0.07
         self._timer = 0
         self._index = 0
 
@@ -26,7 +26,7 @@ class stupid_enemy(enemy):
 
     def draw(self, screen, delta_time):
         self._timer += delta_time
-        if self._timer >= self._timePerFrame:
+        if self._timer >= self._timer_per_frame:
             self._timer = 0
             self._index += 1
 
@@ -43,5 +43,5 @@ class stupid_enemy(enemy):
         screen.blit(trimmed_image, (self.pos.x, self.pos.y))
 
     def generate_enemy(W:int, H:int):
-        r = 50
+        r = 40
         return stupid_enemy(random.randint(r, W), random.choice([r, H-r]), r, 2)

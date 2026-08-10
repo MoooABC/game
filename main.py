@@ -1,24 +1,27 @@
-import pygame, sys, time, pygame_gui
+import pygame, sys, time, pygame_gui, os
 
 from player import Player
 from game_over import game_over
 from very_stupid_enemy import very_stupid_enemy
 from stupid_enemy import stupid_enemy
+from archer_enemy import archer_enemy
 
 player = None
 enemies = None
 start_time = None
-W, H = 800, 600
+W, H = 1000, 700
 screen = None
 
 def reset():
     global player, enemies, start_time, W, H, screen
+    os.environ['SDL_VIDEO_WINDOW_POS'] = "center"
     pygame.init()
     screen = pygame.display.set_mode((W, H))
     pygame.display.set_caption("(-:")
     player = Player(W/2, H/2, 40, 6)
-    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(5)] + \
-              [very_stupid_enemy.generate_enemy(W, H) for _ in range(0)]
+    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(10)] + \
+              [very_stupid_enemy.generate_enemy(W, H) for _ in range(5)] + \
+              [archer_enemy.generate_enemy(W, H) for _ in range(5)]
     start_time = time.time()
 
 reset()
@@ -65,6 +68,10 @@ while True:
                 e.handle_movement()
             case "stupid_enemy":
                 e.handle_movement(player)
+            case "archer_enemy":
+                e.handle_shoot(player, time_delta)
+            case _:
+                raise RuntimeError("unknown enemy")
         if (e.check_collision_with_player(player)):
             game_over(time.time()-start_time)
             reset()
