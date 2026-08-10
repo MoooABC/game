@@ -16,9 +16,9 @@ def reset():
     pygame.init()
     screen = pygame.display.set_mode((W, H))
     pygame.display.set_caption("(-:")
-    player = Player(W/2, H/2, 40, 10)
-    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(10)] + \
-              [very_stupid_enemy.generate_enemy(W, H) for _ in range(40)]
+    player = Player(W/2, H/2, 40, 6)
+    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(5)] + \
+              [very_stupid_enemy.generate_enemy(W, H) for _ in range(0)]
     start_time = time.time()
 
 reset()
@@ -68,8 +68,9 @@ while True:
         if (e.check_collision_with_player(player)):
             game_over(time.time()-start_time)
             reset()
+            pass
 
-        e.draw(screen)
+        e.draw(screen, time_delta)
         if e.update(screen) == -1:
             enemies.remove(e)
             match e.type:
@@ -79,5 +80,6 @@ while True:
                     enemies.append(stupid_enemy.generate_enemy(W, H))
             del e
 
+    pygame.display.set_caption(f"(-:    {round(clock.get_fps(), 3)}fps")
     pygame.display.flip()
     pygame.display.update()

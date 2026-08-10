@@ -36,8 +36,7 @@ class enemy(ABC):
 
     def check_collision_with_player(self, player):
         player_rect = pygame.Rect(player.pos.x, player.pos.y, player.size, player.size)
-        self_width_height = self.size * 2
-        self_rect =  pygame.Rect(self.pos.x-self.size, self.pos.y-self.size, self_width_height, self_width_height)
+        self_rect =  pygame.Rect(self.pos.x, self.pos.y, self.size, self.size)
         if player_rect.colliderect(self_rect):
             return True
         return False

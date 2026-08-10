@@ -11,7 +11,7 @@ class Player:
         run_sprite_sheet.get_image(384, 192, 192),
         run_sprite_sheet.get_image(576, 192, 192),
         run_sprite_sheet.get_image(768, 192, 192),
-        run_sprite_sheet.get_image(960, 384, 192)
+        run_sprite_sheet.get_image(960, 192, 192)
     ]
     idle_sprite_sheet = SpriteSheet("assets/Player_Idle.png")
     frames_idle = [
@@ -31,7 +31,6 @@ class Player:
         self.SPEED = speed
 
         self.isRunning = False
-
         self._timePerFrame = 0.07
         self._timer = 0
         self._index = 0
@@ -73,8 +72,10 @@ class Player:
         if self._timer >= self._timePerFrame:
             self._timer = 0
             self._index += 1
-        if (self.isRunning):
+        if self.isRunning:
             current_image = self.frames_run[self._index % len(self.frames_run)].convert_alpha()
+            if self.movement.x < 0:
+                current_image = pygame.transform.flip(current_image, True, False)
         else:
             current_image = self.frames_idle[self._index % len(self.frames_idle)].convert_alpha()
         scaled_image = pygame.transform.scale(current_image, (self.size*2.75, self.size*2.75))
