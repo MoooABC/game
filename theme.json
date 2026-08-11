@@ -1,5 +1,16 @@
 {
+  "button": {
+    "font": {
+      "name": "arial",
+      "size": "18",
+      "regular_path": "assets/fonts/arial.ttf"
+    }
+  },
   "label": {
-    "font": {"name": "arial", "size": "30"}
+    "font": {
+      "name": "arial",
+      "size": "30",
+      "regular_path": "assets/fonts/arial.ttf"
+    }
   }
 }

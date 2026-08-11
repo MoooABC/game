@@ -8,7 +8,7 @@ def game_over(time):
     pygame.mouse.set_visible(False)
     img_cursor_default = pygame.image.load("assets/images/Cursor_default.png").convert_alpha()
     img_cursor_pointer = pygame.image.load("assets/images/Cursor_pointer.png").convert_alpha()
-    #img_text = pygame.image.load("assets/images/Cursor_text.png").convert_alpha()
+    img_text = pygame.image.load("assets/images/Cursor_text.png").convert_alpha()
     img_forbidden = pygame.image.load("assets/images/Cursor_forbidden.png").convert_alpha()
 
 
@@ -22,25 +22,26 @@ def game_over(time):
         (800, 600),
         theme_path="theme.json"
     )
+    lang = ui_manager.get_locale() # unsupported languages will teat as eng
 
-    label_lose = pygame_gui.elements.UILabel(
-        relative_rect=pygame.Rect((300, 250), (200, 50)),
-        text= f"You lost!",
+    pygame_gui.elements.UILabel(
+        relative_rect=pygame.Rect((300, 250), (220, 50)),
+        text= "הפסדת!" if lang == "he" else "You lost!",
         manager=ui_manager
     )
     label_feedback = pygame_gui.elements.UILabel(
-        relative_rect=pygame.Rect((300, 270), (200, 70)),
-        text= "you are a loser!" if time < 10 else "you can do better" if time < 100 else "geat! :)",
+        relative_rect=pygame.Rect((300, 270), (240, 70)),
+        text= ("אתה תבוסתן!" if time < 10 else "אתה יכול לעשות טוב יותר" if time < 100 else "נהדר") if lang=="he" else ("you are a loser!" if time < 10 else "you can do better" if time < 100 else "geat! :)"),
         manager=ui_manager
     )
     button_play_again = pygame_gui.elements.UIButton(
         relative_rect=pygame.Rect((320, 340), (150, 50)),
-        text= "play again",
+        text= "שחק שוב" if lang=="he" else "play again",
         manager=ui_manager
     )
     button_exit = pygame_gui.elements.UIButton(
         relative_rect=pygame.Rect((320, 400), (150, 50)),
-        text= "exit",
+        text= "יציאה" if lang=="he" else "exit",
         manager=ui_manager
     )
 
