@@ -3,7 +3,7 @@ from enemy import enemy
 from SpriteSheet import SpriteSheet
 
 class very_stupid_enemy(enemy):
-    run_sprite_sheet = SpriteSheet("assets/very_stupid_enemy_run.png")
+    run_sprite_sheet = SpriteSheet("assets/images/very_stupid_enemy_run.png")
     frames_run = [
         run_sprite_sheet.get_image(0, 192, 192),
         run_sprite_sheet.get_image(192, 192, 192),

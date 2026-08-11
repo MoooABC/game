@@ -6,7 +6,7 @@ from SpriteSheet import SpriteSheet
 
 
 class archer_enemy(enemy):
-    shoot_sprite_sheet = SpriteSheet("assets/archer_enemy_shoot.png")
+    shoot_sprite_sheet = SpriteSheet("assets/images/archer_enemy_shoot.png")
     frames_shoot = [
         shoot_sprite_sheet.get_image(0, 192, 192),
         shoot_sprite_sheet.get_image(192, 192, 192),
@@ -18,7 +18,7 @@ class archer_enemy(enemy):
         shoot_sprite_sheet.get_image(1344, 192, 192),
         shoot_sprite_sheet.get_image(1536, 192, 192)
     ]
-    idle_sprite_sheet = SpriteSheet("assets/archer_enemy_idle.png")
+    idle_sprite_sheet = SpriteSheet("assets/images/archer_enemy_idle.png")
     frames_idle = [
         idle_sprite_sheet.get_image(0, 192, 192),
         idle_sprite_sheet.get_image(192, 192, 192),
@@ -69,8 +69,10 @@ class archer_enemy(enemy):
                     dir_vector = pygame.math.Vector2(1, 0)
                 self.current_arrows.append(arrow(self.pos.x, self.pos.y, dir_vector, 3, player))
 
-        for a in self.current_arrows:
-            a.update()
+        for a in self.current_arrows[:]:
+            if not a.update(delta_time):
+                self.current_arrows.remove(a)
+                del a
 
         if (self._index >= len(self.frames_shoot)):
             self.isShooting = False
@@ -101,4 +103,4 @@ class archer_enemy(enemy):
 
     def generate_enemy(W:int, H:int):
         r = 40
-        return archer_enemy(random.randint(r, W), random.choice([r, H-r]), r, random.random() * 10)
+        return archer_enemy(random.randint(r, W), random.choice([r, H-r]), r, random.random() * 7)

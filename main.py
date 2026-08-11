@@ -19,8 +19,8 @@ def reset():
     screen = pygame.display.set_mode((W, H))
     pygame.display.set_caption("(-:")
     player = Player(W/2, H/2, 40, 6)
-    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(10)] + \
-              [very_stupid_enemy.generate_enemy(W, H) for _ in range(5)] + \
+    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(3)] + \
+              [very_stupid_enemy.generate_enemy(W, H) for _ in range(10)] + \
               [archer_enemy.generate_enemy(W, H) for _ in range(5)]
     start_time = time.time()
 
@@ -29,7 +29,7 @@ reset()
 
 ui_manager = pygame_gui.UIManager(
     (800, 600),
-    theme_path={"label": {"font": {"name": "arial", "size": "30"}}}
+    theme_path="theme.json"
 )
 label_time = pygame_gui.elements.UILabel(
     relative_rect=pygame.Rect((0, 0), (100, 100)),
@@ -62,7 +62,7 @@ while True:
     player.handle_movement(keys, W,H)
     player.draw(screen, time_delta)
 
-    for e in enemies:
+    for e in enemies[:]:
         match e.type:
             case "very_stupid_enemy":
                 e.handle_movement()

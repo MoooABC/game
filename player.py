@@ -4,7 +4,7 @@ from SpriteSheet import SpriteSheet
 pygame.init()
 
 class Player:
-    run_sprite_sheet = SpriteSheet("assets/Player_run.png")
+    run_sprite_sheet = SpriteSheet("assets/images/Player_run.png")
     frames_run = [
         run_sprite_sheet.get_image(0, 192, 192),
         run_sprite_sheet.get_image(192, 192, 192),
@@ -13,7 +13,7 @@ class Player:
         run_sprite_sheet.get_image(768, 192, 192),
         run_sprite_sheet.get_image(960, 192, 192)
     ]
-    idle_sprite_sheet = SpriteSheet("assets/Player_Idle.png")
+    idle_sprite_sheet = SpriteSheet("assets/images/Player_Idle.png")
     frames_idle = [
         idle_sprite_sheet.get_image(0, 192, 192),
         idle_sprite_sheet.get_image(192, 192, 192),
