@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-import pygame
+import pygame, random
 
 class enemy(ABC):
     def __init__(self, pos, size, type):
@@ -34,9 +34,12 @@ class enemy(ABC):
     def draw(self, screen) -> None:
         pass
 
+
     def check_collision_with_player(self, player):
         player_rect = pygame.Rect(player.pos.x, player.pos.y, player.size, player.size)
-        self_rect =  pygame.Rect(self.pos.x, self.pos.y, self.size, self.size)
-        if player_rect.colliderect(self_rect):
-            return True
-        return False
+        size_shrink = 0.5
+        new_size = self.size * size_shrink
+        offset = (self.size - new_size) / 2
+        self_rect = pygame.Rect(self.pos.x + offset, self.pos.y + offset, new_size, new_size)
+
+        return player_rect.colliderect(self_rect)

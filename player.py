@@ -1,4 +1,5 @@
 import pygame
+import math
 from SpriteSheet import SpriteSheet
 
 pygame.init()
@@ -24,6 +25,13 @@ class Player:
         idle_sprite_sheet.get_image(1152, 192, 192),
         idle_sprite_sheet.get_image(1344, 192, 192)
     ]
+    attack_sprite_sheet = SpriteSheet("assets/images/Player_attack.png")
+    frames_attack = [
+        attack_sprite_sheet.get_image(0, 192, 192),
+        attack_sprite_sheet.get_image(192, 192, 192),
+        attack_sprite_sheet.get_image(384, 192, 192),
+        attack_sprite_sheet.get_image(576, 192, 192)
+    ]
     def __init__(self, x, y, size, speed):
         self.pos = pygame.Vector2(x, y)
         self.size = size
@@ -32,11 +40,28 @@ class Player:
 
         self.isRunning = False
         self._timePerFrame = 0.07
-        self._timer = 0
+        self._timer_animation = 0
         self._index = 0
+
+        self.isAttacking = False
+        self._attack_time = 0.8
+        self._timer_attack = 0
+        self._attack_distance = 150
 
     def reset_for_next_frame(self):
         self.movement = pygame.math.Vector2()
+
+    def update_for_attack(self, pressed_keys, delta_time, enemies):
+        self._timer_attack += delta_time
+
+        if pressed_keys[pygame.K_SPACE] and self._timer_attack >= self._attack_time:
+            self._timer_attack = 0
+            self._index = 0
+            self.isAttacking = True
+            for e in enemies:
+                distance = math.sqrt(math.pow(self.pos.x - e.pos.x, 2) + math.pow(self.pos.y - e.pos.y, 2))
+                if distance <= self._attack_distance:
+                    e.pos = pygame.math.Vector2(-10, -10) # send the enemy of screen so it will respawn
 
     def handle_movement(self, pressed_keys, W, H):
         if pressed_keys[pygame.K_LEFT] or pressed_keys[pygame.K_a]:
@@ -47,8 +72,6 @@ class Player:
             self.movement.y -= 1
         if pressed_keys[pygame.K_DOWN] or pressed_keys[pygame.K_s]:
             self.movement.y += 1
-        if pressed_keys[pygame.K_0]:
-            print(self.pos)
 
         if self.movement.length_squared() > 0:
             self.isRunning = True
@@ -68,11 +91,21 @@ class Player:
             self.isRunning = False
 
     def draw(self, screen, delta_time):
-        self._timer += delta_time
-        if self._timer >= self._timePerFrame:
-            self._timer = 0
+        self._timer_animation += delta_time
+        if self._timer_animation >= self._timePerFrame:
+            self._timer_animation = 0
             self._index += 1
-        if self.isRunning:
+
+        if self.isAttacking:
+            try:
+                current_image = self.frames_attack[self._index].convert_alpha()
+            except IndexError:
+                current_image = self.frames_idle[self._index % len(self.frames_idle)].convert_alpha()
+                self.isAttacking = False
+            finally:
+                if self.movement.x < 0:
+                    current_image = pygame.transform.flip(current_image, True, False)
+        elif self.isRunning:
             current_image = self.frames_run[self._index % len(self.frames_run)].convert_alpha()
             if self.movement.x < 0:
                 current_image = pygame.transform.flip(current_image, True, False)

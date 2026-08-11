@@ -100,7 +100,6 @@ class archer_enemy(enemy):
             arrow.draw(screen)
         screen.blit(trimmed_image, (self.pos.x, self.pos.y))
 
-
     def generate_enemy(W:int, H:int):
         r = 40
         return archer_enemy(random.randint(r, W), random.choice([r, H-r]), r, random.random() * 7)

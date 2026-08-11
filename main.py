@@ -1,3 +1,5 @@
+from cmath import polar
+
 import pygame, sys, time, pygame_gui, os
 
 from player import Player
@@ -18,8 +20,8 @@ def reset():
     pygame.init()
     screen = pygame.display.set_mode((W, H))
     pygame.display.set_caption("(-:")
-    player = Player(W/2, H/2, 40, 6)
-    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(3)] + \
+    player = Player(W/2, H/2, 50, 6)
+    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(5)] + \
               [very_stupid_enemy.generate_enemy(W, H) for _ in range(10)] + \
               [archer_enemy.generate_enemy(W, H) for _ in range(5)]
     start_time = time.time()
@@ -49,16 +51,14 @@ while True:
             pygame.quit()
             sys.exit()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 sys.exit()
         ui_manager.process_events(event)
     screen.fill((255, 255, 255))
-    label_time.set_text(str(round(time.time()-start_time, 1)))
-    ui_manager.update(time_delta)
-    ui_manager.draw_ui(screen)
 
     keys = pygame.key.get_pressed()
+    player.update_for_attack(keys, time_delta, enemies)
     player.handle_movement(keys, W,H)
     player.draw(screen, time_delta)
 
@@ -73,19 +73,27 @@ while True:
             case _:
                 raise RuntimeError("unknown enemy")
         if (e.check_collision_with_player(player)):
+            temp_time = time.time()-start_time
             game_over(time.time()-start_time)
             reset()
-            pass
+            break
 
         e.draw(screen, time_delta)
         if e.update(screen) == -1:
             enemies.remove(e)
+
             match e.type:
                 case "very_stupid_enemy":
                     enemies.append(very_stupid_enemy.generate_enemy(W, H))
                 case "stupid_enemy":
                     enemies.append(stupid_enemy.generate_enemy(W, H))
-            del e
+                case "archer_enemy":
+                    enemies.append(archer_enemy.generate_enemy(W, H))
+
+
+    label_time.set_text(str(round(time.time()-start_time, 1)))
+    ui_manager.update(time_delta)
+    ui_manager.draw_ui(screen)
 
     pygame.display.set_caption(f"(-:    {round(clock.get_fps(), 3)}fps")
     pygame.display.flip()
