@@ -1,6 +1,9 @@
+import random
+
 import pygame
 import math
 from SpriteSheet import SpriteSheet
+from  stupid_enemy import stupid_enemy
 
 pygame.init()
 
@@ -44,14 +47,14 @@ class Player:
         self._index = 0
 
         self.isAttacking = False
-        self._attack_time = 0.8
+        self._attack_time = 0.95
         self._timer_attack = 0
-        self._attack_distance = 150
+        self._attack_distance = 110
 
     def reset_for_next_frame(self):
         self.movement = pygame.math.Vector2()
 
-    def update_for_attack(self, pressed_keys, delta_time, enemies):
+    def update_for_attack(self, pressed_keys, delta_time, enemies, W, H):
         self._timer_attack += delta_time
 
         if pressed_keys[pygame.K_SPACE] and self._timer_attack >= self._attack_time:
@@ -61,7 +64,8 @@ class Player:
             for e in enemies:
                 distance = math.sqrt(math.pow(self.pos.x - e.pos.x, 2) + math.pow(self.pos.y - e.pos.y, 2))
                 if distance <= self._attack_distance:
-                    e.pos = pygame.math.Vector2(-10, -10) # send the enemy of screen so it will respawn
+                    e.pos = pygame.math.Vector2(random.randint(self.size, W-self.size), -random.randint(self.size, H-self.size)) # send the enemy of screen so it will respawn
+                    # i used random place of screen and not just (-10;-10) because somehow it made all the enemies respawn in the top left corner
 
     def handle_movement(self, pressed_keys, W, H):
         if pressed_keys[pygame.K_LEFT] or pressed_keys[pygame.K_a]:

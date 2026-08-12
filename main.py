@@ -28,7 +28,6 @@ def reset():
 
 reset()
 
-
 ui_manager = pygame_gui.UIManager(
     (800, 600),
     theme_path="theme.json"
@@ -45,7 +44,6 @@ while True:
     time_delta = clock.tick(60) / 1000.0
     player.reset_for_next_frame()
 
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -58,7 +56,7 @@ while True:
     screen.fill((255, 255, 255))
 
     keys = pygame.key.get_pressed()
-    player.update_for_attack(keys, time_delta, enemies)
+    player.update_for_attack(keys, time_delta, enemies, W, H)
     player.handle_movement(keys, W,H)
     player.draw(screen, time_delta)
 
