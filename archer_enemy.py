@@ -67,7 +67,7 @@ class archer_enemy(enemy):
                     dir_vector = dir_vector.normalize()
                 else:
                     dir_vector = pygame.math.Vector2(1, 0)
-                self.current_arrows.append(arrow(self.pos.x, self.pos.y, dir_vector, 300, player))
+                self.current_arrows.append(arrow(self.pos.x, self.pos.y, dir_vector, 170, player))
 
         for a in self.current_arrows[:]:
             if not a.update(delta_time):
@@ -102,4 +102,4 @@ class archer_enemy(enemy):
 
     def generate_enemy(W:int, H:int):
         r = 40
-        return archer_enemy(random.randint(r, W), random.choice([r, H-r]), r, random.random() * 7)
+        return archer_enemy(random.randint(r, W), random.choice([r, H-r]), r, (random.random()+0.08) * 7)
