@@ -19,8 +19,8 @@ class stupid_enemy(enemy):
         self._timer = 0
         self._index = 0
 
-    def handle_movement(self, player):
-        self.movement = (player.pos - self.pos).normalize() * self.SPEED
+    def handle_movement(self, player, delta_time):
+        self.movement = (player.pos - self.pos).normalize() * self.SPEED * delta_time
         self.pos += self.movement
 
 
@@ -44,4 +44,4 @@ class stupid_enemy(enemy):
 
     def generate_enemy(W:int, H:int):
         r = 40
-        return stupid_enemy(random.randint(r, W), random.choice([r, H-r]), r, 2)
+        return stupid_enemy(random.randint(r, W), random.choice([r, H-r]), r, 100)

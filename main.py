@@ -20,7 +20,7 @@ def reset():
     pygame.init()
     screen = pygame.display.set_mode((W, H))
     pygame.display.set_caption("(-:")
-    player = Player(W/2, H/2, 50, 6)
+    player = Player(W/2, H/2, 50, 300)
     enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(5)] + \
               [very_stupid_enemy.generate_enemy(W, H) for _ in range(10)] + \
               [archer_enemy.generate_enemy(W, H) for _ in range(5)]
@@ -41,7 +41,7 @@ label_time = pygame_gui.elements.UILabel(
 clock = pygame.time.Clock()
 
 while True:
-    time_delta = clock.tick(60) / 1000.0
+    time_delta = clock.tick(120) / 1000.0
     player.reset_for_next_frame()
 
     for event in pygame.event.get():
@@ -57,15 +57,15 @@ while True:
 
     keys = pygame.key.get_pressed()
     player.update_for_attack(keys, time_delta, enemies, W, H)
-    player.handle_movement(keys, W,H)
+    player.handle_movement(keys, W,H, time_delta)
     player.draw(screen, time_delta)
 
     for e in enemies[:]:
         match e.type:
             case "very_stupid_enemy":
-                e.handle_movement()
+                e.handle_movement(time_delta)
             case "stupid_enemy":
-                e.handle_movement(player)
+                e.handle_movement(player, time_delta)
             case "archer_enemy":
                 e.handle_shoot(player, time_delta)
             case _:

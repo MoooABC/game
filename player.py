@@ -67,7 +67,7 @@ class Player:
                     e.pos = pygame.math.Vector2(random.randint(self.size, W-self.size), -random.randint(self.size, H-self.size)) # send the enemy of screen so it will respawn
                     # i used random place of screen and not just (-10;-10) because somehow it made all the enemies respawn in the top left corner
 
-    def handle_movement(self, pressed_keys, W, H):
+    def handle_movement(self, pressed_keys, W, H, delta_time):
         if pressed_keys[pygame.K_LEFT] or pressed_keys[pygame.K_a]:
             self.movement.x -= 1
         if pressed_keys[pygame.K_RIGHT] or pressed_keys[pygame.K_d]:
@@ -79,7 +79,7 @@ class Player:
 
         if self.movement.length_squared() > 0:
             self.isRunning = True
-            temp_pos = self.pos + (self.movement.normalize() * self.SPEED)
+            temp_pos = self.pos + (self.movement.normalize() * self.SPEED * delta_time)
             if temp_pos.x < 0:
                 temp_pos.x = 0
             elif temp_pos.x > W - self.size:

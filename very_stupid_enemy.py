@@ -12,17 +12,18 @@ class very_stupid_enemy(enemy):
         run_sprite_sheet.get_image(768, 192, 192),
         run_sprite_sheet.get_image(960, 192, 192)
     ]
-    def __init__(self, x, y, size, movement):
+    def __init__(self, x, y, size, movement, speed):
         super().__init__(pygame.Vector2(x, y), size, "very_stupid_enemy")
         self.MOVEMENT = movement
+        self.speed = speed
 
         self._timer_per_frame = 0.07
         self._timer = 0
         self._index = 0
 
-    def handle_movement(self):
+    def handle_movement(self, delta_time):
         try:
-            self.pos += self.MOVEMENT.normalize()
+            self.pos += (self.MOVEMENT.normalize() * self.speed * delta_time)
         except ValueError:
             pass
 
@@ -46,4 +47,4 @@ class very_stupid_enemy(enemy):
 
     def generate_enemy(W, H):
         r = 40
-        return very_stupid_enemy(random.randint(r, W), random.choice([r, H-r]), r, pygame.math.Vector2(random.randint(-5, 7), random.randint(-7, 5)))
+        return very_stupid_enemy(random.randint(r, W), random.choice([r, H-r]), r, pygame.math.Vector2(random.random(), random.random()), random.randint(70, 120))

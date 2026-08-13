@@ -22,7 +22,7 @@ class arrow():
         self._timer += delta_time
         if self._timer > self._life_time:
             return False
-        velocity = self.direction * self.speed
+        velocity = self.direction * self.speed * delta_time
         self.pos += velocity
         return True
 
