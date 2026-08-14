@@ -7,10 +7,10 @@ def game_over(time):
     pygame.init()
 
     pygame.mouse.set_visible(False)
-    img_cursor_default = pygame.image.load("assets/images/Cursor_default.png").convert_alpha()
-    img_cursor_pointer = pygame.image.load("assets/images/Cursor_pointer.png").convert_alpha()
-    img_cursor_text = pygame.image.load("assets/images/Cursor_text.png").convert_alpha()
-    img_cursor_forbidden = pygame.image.load("assets/images/Cursor_forbidden.png").convert_alpha()
+    img_cursor_default = pygame.image.load("assets/images/cursors/Cursor_default.png").convert_alpha()
+    img_cursor_pointer = pygame.image.load("assets/images/cursors/Cursor_pointer.png").convert_alpha()
+    img_cursor_text = pygame.image.load("assets/images/cursors/Cursor_text.png").convert_alpha()
+    img_cursor_forbidden = pygame.image.load("assets/images/cursors/Cursor_forbidden.png").convert_alpha()
 
 
     window_surface = pygame.display.set_mode((800, 600), pygame.NOFRAME)
@@ -96,7 +96,7 @@ def game_over(time):
                     sys.exit()
                 elif event.ui_element == button_debug:
                     text_list = [f"id: {e.most_specific_combined_id}  txt: {e.text}" for e in ui_manager.get_sprite_group().sprites() if
-                                 not isinstance(e, pygame_gui.core.UIContainer) and hasattr(e, 'text')]
+                                 not isinstance(e, pygame_gui.core.UIContainer)]
                     messagebox.showinfo("debug message", f"language: {lang}\n" +
                                                          f"FPS: {clock.get_fps()}\n" +
                                                          f"dt: {time_delta}\n\n\n" +

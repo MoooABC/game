@@ -6,7 +6,7 @@ from SpriteSheet import SpriteSheet
 
 
 class archer_enemy(enemy):
-    shoot_sprite_sheet = SpriteSheet("assets/images/archer_enemy_shoot.png")
+    shoot_sprite_sheet = SpriteSheet("assets/images/enemies/archer/Archer_Shoot.png")
     frames_shoot = [
         shoot_sprite_sheet.get_image(0, 192, 192),
         shoot_sprite_sheet.get_image(192, 192, 192),
@@ -18,7 +18,7 @@ class archer_enemy(enemy):
         shoot_sprite_sheet.get_image(1344, 192, 192),
         shoot_sprite_sheet.get_image(1536, 192, 192)
     ]
-    idle_sprite_sheet = SpriteSheet("assets/images/archer_enemy_idle.png")
+    idle_sprite_sheet = SpriteSheet("assets/images/enemies/archer/Archer_Idle.png")
     frames_idle = [
         idle_sprite_sheet.get_image(0, 192, 192),
         idle_sprite_sheet.get_image(192, 192, 192),

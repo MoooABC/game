@@ -1,7 +1,7 @@
 import pygame, random, math
 
 class arrow():
-    arrow_img = pygame.image.load("assets/images/arrow.png").convert_alpha()
+    arrow_img = pygame.image.load("assets/images/objects/arrow.png").convert_alpha()
     def __init__(self, x, y, direction, speed, player):
         self.pos = pygame.math.Vector2(x, y)
         dx = self.pos.x - player.pos.x
