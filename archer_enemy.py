@@ -8,24 +8,24 @@ from SpriteSheet import SpriteSheet
 class archer_enemy(enemy):
     shoot_sprite_sheet = SpriteSheet("assets/images/enemies/archer/Archer_Shoot.png")
     frames_shoot = [
-        shoot_sprite_sheet.get_image(0, 192, 192),
-        shoot_sprite_sheet.get_image(192, 192, 192),
-        shoot_sprite_sheet.get_image(384, 192, 192),
-        shoot_sprite_sheet.get_image(576, 192, 192),
-        shoot_sprite_sheet.get_image(768, 192, 192),
-        shoot_sprite_sheet.get_image(960, 192, 192),
-        shoot_sprite_sheet.get_image(1152, 192, 192),
-        shoot_sprite_sheet.get_image(1344, 192, 192),
-        shoot_sprite_sheet.get_image(1536, 192, 192)
+        shoot_sprite_sheet.get_image(0, 0, 192, 192),
+        shoot_sprite_sheet.get_image(192, 0, 192, 192),
+        shoot_sprite_sheet.get_image(384, 0, 192, 192),
+        shoot_sprite_sheet.get_image(576, 0, 192, 192),
+        shoot_sprite_sheet.get_image(768, 0, 192, 192),
+        shoot_sprite_sheet.get_image(960, 0, 192, 192),
+        shoot_sprite_sheet.get_image(1152, 0, 192, 192),
+        shoot_sprite_sheet.get_image(1344, 0, 192, 192),
+        shoot_sprite_sheet.get_image(1536, 0, 192, 192)
     ]
     idle_sprite_sheet = SpriteSheet("assets/images/enemies/archer/Archer_Idle.png")
     frames_idle = [
-        idle_sprite_sheet.get_image(0, 192, 192),
-        idle_sprite_sheet.get_image(192, 192, 192),
-        idle_sprite_sheet.get_image(384, 192, 192),
-        idle_sprite_sheet.get_image(576, 192, 192),
-        idle_sprite_sheet.get_image(768, 192, 192),
-        idle_sprite_sheet.get_image(960, 192, 192),
+        idle_sprite_sheet.get_image(0, 0, 192, 192),
+        idle_sprite_sheet.get_image(192, 0, 192, 192),
+        idle_sprite_sheet.get_image(384, 0, 192, 192),
+        idle_sprite_sheet.get_image(576, 0, 192, 192),
+        idle_sprite_sheet.get_image(768, 0, 192, 192),
+        idle_sprite_sheet.get_image(960, 0, 192, 192),
     ]
     def __init__(self, x, y, size, time_per_shot):
         super().__init__(pygame.Vector2(x, y), size, "archer_enemy")

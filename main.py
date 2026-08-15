@@ -1,5 +1,3 @@
-from cmath import polar
-
 import pygame, sys, time, pygame_gui, os
 
 from player import Player
@@ -7,6 +5,7 @@ from game_over import game_over
 from very_stupid_enemy import very_stupid_enemy
 from stupid_enemy import stupid_enemy
 from archer_enemy import archer_enemy
+from TNT_guy_enemy import TNT_guy_enemy
 
 player = None
 enemies = None
@@ -21,9 +20,10 @@ def reset():
     screen = pygame.display.set_mode((W, H))
     pygame.display.set_caption("(-:")
     player = Player(W/2, H/2, 50, 300)
-    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(5)] + \
-              [very_stupid_enemy.generate_enemy(W, H) for _ in range(10)] + \
-              [archer_enemy.generate_enemy(W, H) for _ in range(5)]
+    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(10)] + \
+              [very_stupid_enemy.generate_enemy(W, H) for _ in range(7)] + \
+              [archer_enemy.generate_enemy(W, H) for _ in range(5)] + \
+              [TNT_guy_enemy.generate_enemy(W, H) for _ in range(2)]
     start_time = time.time()
 
 reset()
@@ -68,6 +68,8 @@ while True:
                 e.handle_movement(player, time_delta)
             case "archer_enemy":
                 e.handle_shoot(player, time_delta)
+            case "TNT_guy_enemy":
+                e.handle_shoot(time_delta, W, H, player)
             case _:
                 raise RuntimeError("unknown enemy")
         if (e.check_collision_with_player(player)):

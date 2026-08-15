@@ -1,6 +1,6 @@
 import pygame, random, math
 
-class arrow():
+class arrow:
     arrow_img = pygame.image.load("assets/images/objects/arrow.png").convert_alpha()
     def __init__(self, x, y, direction, speed, player):
         self.pos = pygame.math.Vector2(x, y)

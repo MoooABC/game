@@ -5,12 +5,12 @@ from SpriteSheet import SpriteSheet
 class very_stupid_enemy(enemy):
     run_sprite_sheet = SpriteSheet("assets/images/enemies/very_stupid/Warrior_Run.png")
     frames_run = [
-        run_sprite_sheet.get_image(0, 192, 192),
-        run_sprite_sheet.get_image(192, 192, 192),
-        run_sprite_sheet.get_image(384, 192, 192),
-        run_sprite_sheet.get_image(576, 192, 192),
-        run_sprite_sheet.get_image(768, 192, 192),
-        run_sprite_sheet.get_image(960, 192, 192)
+        run_sprite_sheet.get_image(0, 0, 192, 192),
+        run_sprite_sheet.get_image(192, 0, 192, 192),
+        run_sprite_sheet.get_image(384, 0, 192, 192),
+        run_sprite_sheet.get_image(576, 0, 192, 192),
+        run_sprite_sheet.get_image(768, 0, 192, 192),
+        run_sprite_sheet.get_image(960, 0, 192, 192)
     ]
     def __init__(self, x, y, size, movement, speed):
         super().__init__(pygame.Vector2(x, y), size, "very_stupid_enemy")

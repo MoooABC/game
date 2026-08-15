@@ -1,5 +1,4 @@
 import random
-
 import pygame
 import math
 from SpriteSheet import SpriteSheet
@@ -9,30 +8,30 @@ pygame.init()
 class Player:
     run_sprite_sheet = SpriteSheet("assets/images/player/Player_run.png")
     frames_run = [
-        run_sprite_sheet.get_image(0, 192, 192),
-        run_sprite_sheet.get_image(192, 192, 192),
-        run_sprite_sheet.get_image(384, 192, 192),
-        run_sprite_sheet.get_image(576, 192, 192),
-        run_sprite_sheet.get_image(768, 192, 192),
-        run_sprite_sheet.get_image(960, 192, 192)
+        run_sprite_sheet.get_image(0, 0, 192, 192),
+        run_sprite_sheet.get_image(192, 0, 192, 192),
+        run_sprite_sheet.get_image(384, 0, 192, 192),
+        run_sprite_sheet.get_image(576, 0, 192, 192),
+        run_sprite_sheet.get_image(768, 0, 192, 192),
+        run_sprite_sheet.get_image(960, 0, 192, 192)
     ]
     idle_sprite_sheet = SpriteSheet("assets/images/player/Player_Idle.png")
     frames_idle = [
-        idle_sprite_sheet.get_image(0, 192, 192),
-        idle_sprite_sheet.get_image(192, 192, 192),
-        idle_sprite_sheet.get_image(384, 192, 192),
-        idle_sprite_sheet.get_image(576, 192, 192),
-        idle_sprite_sheet.get_image(768, 192, 192),
-        idle_sprite_sheet.get_image(960, 192, 192),
-        idle_sprite_sheet.get_image(1152, 192, 192),
-        idle_sprite_sheet.get_image(1344, 192, 192)
+        idle_sprite_sheet.get_image(0, 0, 192, 192),
+        idle_sprite_sheet.get_image(192, 0, 192, 192),
+        idle_sprite_sheet.get_image(384, 0, 192, 192),
+        idle_sprite_sheet.get_image(576, 0, 192, 192),
+        idle_sprite_sheet.get_image(768, 0, 192, 192),
+        idle_sprite_sheet.get_image(960, 0, 192, 192),
+        idle_sprite_sheet.get_image(1152, 0, 192, 192),
+        idle_sprite_sheet.get_image(1344, 0, 192, 192)
     ]
     attack_sprite_sheet = SpriteSheet("assets/images/player/Player_attack.png")
     frames_attack = [
-        attack_sprite_sheet.get_image(0, 192, 192),
-        attack_sprite_sheet.get_image(192, 192, 192),
-        attack_sprite_sheet.get_image(384, 192, 192),
-        attack_sprite_sheet.get_image(576, 192, 192)
+        attack_sprite_sheet.get_image(0, 0, 192, 192),
+        attack_sprite_sheet.get_image(192, 0, 192, 192),
+        attack_sprite_sheet.get_image(384, 0, 192, 192),
+        attack_sprite_sheet.get_image(576, 0, 192, 192)
     ]
     def __init__(self, x, y, size, speed):
         self.pos = pygame.Vector2(x, y)
