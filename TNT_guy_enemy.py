@@ -102,4 +102,4 @@ class TNT_guy_enemy(enemy):
 
     def generate_enemy(W:int, H:int):
         r = 40
-        return TNT_guy_enemy(random.randint(r, W), random.choice([r, H-r]), r, (random.random()+0.1) * 4)
+        return TNT_guy_enemy(random.randint(r, W), random.choice([r, H-r]), r, (random.random()+0.4) * 7)

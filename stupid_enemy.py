@@ -44,4 +44,4 @@ class stupid_enemy(enemy):
 
     def generate_enemy(W:int, H:int):
         r = 40
-        return stupid_enemy(random.randint(r, W), random.choice([r, H-r]), r, 100)
+        return stupid_enemy(random.randint(r, W-r), random.choice([r, H-r]), r, 100)

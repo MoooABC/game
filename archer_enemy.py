@@ -1,5 +1,4 @@
-import pygame, random, math
-
+import pygame, random
 from arrow import arrow
 from enemy import enemy
 from SpriteSheet import SpriteSheet
@@ -102,4 +101,4 @@ class archer_enemy(enemy):
 
     def generate_enemy(W:int, H:int):
         r = 40
-        return archer_enemy(random.randint(r, W), random.choice([r, H-r]), r, (random.random()+0.08) * 7)
+        return archer_enemy(random.randint(r, W), random.choice([r, H-r]), r, (random.random()+0.1) * 7)
