@@ -13,18 +13,20 @@ start_time = None
 W, H = 1000, 700
 screen = None
 
-def reset():
+
+def reset(player_size=50):
     global player, enemies, start_time, W, H, screen
     os.environ['SDL_VIDEO_WINDOW_POS'] = "center"
     pygame.init()
     screen = pygame.display.set_mode((W, H))
     pygame.display.set_caption("(-:")
-    player = Player(W/2, H/2, 50, 300)
-    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(10)] + \
-              [very_stupid_enemy.generate_enemy(W, H) for _ in range(7)] + \
+    player = Player(W / 2, H / 2, player_size, 300)
+    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(4)] + \
+              [very_stupid_enemy.generate_enemy(W, H) for _ in range(10)] + \
               [archer_enemy.generate_enemy(W, H) for _ in range(5)] + \
-              [TNT_guy_enemy.generate_enemy(W, H) for _ in range(2)]
+              [TNT_guy_enemy.generate_enemy(W, H) for _ in range(4)]
     start_time = time.time()
+
 
 reset()
 
@@ -34,7 +36,7 @@ ui_manager = pygame_gui.UIManager(
 )
 label_time = pygame_gui.elements.UILabel(
     relative_rect=pygame.Rect((0, 0), (100, 100)),
-    text= f"000.0s",
+    text=f"000.0s",
     manager=ui_manager
 )
 
@@ -57,7 +59,7 @@ while True:
 
     keys = pygame.key.get_pressed()
     player.update_for_attack(keys, time_delta, enemies, W, H)
-    player.handle_movement(keys, W,H, time_delta)
+    player.handle_movement(keys, W, H, time_delta)
     player.draw(screen, time_delta)
 
     for e in enemies[:]:
@@ -73,8 +75,11 @@ while True:
             case _:
                 raise RuntimeError("unknown enemy")
         if (e.check_collision_with_player(player)):
-            temp_time = time.time()-start_time
-            game_over(time.time()-start_time)
+            temp_time = time.time() - start_time
+            p_size = game_over(time.time() - start_time)
+            if p_size is not None:
+                reset(p_size)
+                break
             reset()
             break
 
@@ -89,12 +94,13 @@ while True:
                     enemies.append(stupid_enemy.generate_enemy(W, H))
                 case "archer_enemy":
                     enemies.append(archer_enemy.generate_enemy(W, H))
+                case "TNT_guy_enemy":
+                    enemies.append(TNT_guy_enemy.generate_enemy(W, H))
 
-
-    label_time.set_text(str(round(time.time()-start_time, 1)))
+    label_time.set_text(str(round(time.time() - start_time, 1)))
     ui_manager.update(time_delta)
     ui_manager.draw_ui(screen)
 
-    pygame.display.set_caption(f"(-:    {round(clock.get_fps(), 3)}fps")
+    pygame.display.set_caption(f"(-:\t{round(clock.get_fps(), 3)}fps")
     pygame.display.flip()
     pygame.display.update()

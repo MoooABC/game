@@ -90,6 +90,10 @@ def game_over(time):
             ui_manager.process_events(event)
             if event.type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == button_play_again:
+                    if time >= 100:
+                        if messagebox.askyesno("Hard Mode", "Do you want to enter hard mode?"):
+                            return 90
+
                     is_running = False
                 elif event.ui_element == button_exit:
                     pygame.quit()
