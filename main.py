@@ -45,7 +45,7 @@ label_time = pygame_gui.elements.UILabel(
 clock = pygame.time.Clock()
 
 while True:
-    time_delta = max(clock.tick(FPS) / 1000.0, 1/FPS)
+    time_delta = min(clock.tick(FPS) / 1000.0, 1/FPS)
     player.reset_for_next_frame()
 
     for event in pygame.event.get():
