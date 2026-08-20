@@ -1,5 +1,6 @@
 import pygame, sys, time, pygame_gui, os
 
+
 from player import Player
 from game_over import game_over
 from very_stupid_enemy import very_stupid_enemy
@@ -11,6 +12,7 @@ player = None
 enemies = None
 start_time = None
 W, H = 1000, 700
+FPS = 60
 screen = None
 
 
@@ -43,7 +45,7 @@ label_time = pygame_gui.elements.UILabel(
 clock = pygame.time.Clock()
 
 while True:
-    time_delta = clock.tick(120) / 1000.0
+    time_delta = max(clock.tick(FPS) / 1000.0, 1/FPS)
     player.reset_for_next_frame()
 
     for event in pygame.event.get():
@@ -76,6 +78,11 @@ while True:
                 raise RuntimeError("unknown enemy")
         if (e.check_collision_with_player(player)):
             temp_time = time.time() - start_time
+            if temp_time < 0.5:
+                print(temp_time)
+                print(e)
+                print(e.pos)
+                print(player.pos)
             p_size = game_over(time.time() - start_time)
             if p_size is not None:
                 reset(p_size)

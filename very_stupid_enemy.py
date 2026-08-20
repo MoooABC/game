@@ -47,4 +47,4 @@ class very_stupid_enemy(enemy):
 
     def generate_enemy(W, H):
         r = 40
-        return very_stupid_enemy(random.randint(r, W), random.choice([r, H-r]), r, pygame.math.Vector2(random.random(), random.random()), random.randint(70, 120))
+        return very_stupid_enemy(random.randint(r, W), random.choice([r, H-r]), r, pygame.math.Vector2(random.random(), random.random()).normalize(), random.randint(70, 120))
