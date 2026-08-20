@@ -11,20 +11,19 @@ player = None
 enemies = None
 start_time = None
 W, H = 1000, 700
-min_respawn_distance = 300
 screen = None
 
 
 def reset(player_size=50):
-    global player, enemies, start_time, W, H, screen, min_respawn_distance
+    global player, enemies, start_time, W, H, screen
     os.environ['SDL_VIDEO_WINDOW_POS'] = "center"
     pygame.init()
     screen = pygame.display.set_mode((W, H))
     pygame.display.set_caption("(-:")
     player = Player(W / 2, H / 2, player_size, 300)
-    enemies = [stupid_enemy.generate_enemy(W, H, player, min_respawn_distance) for _ in range(4)] + \
+    enemies = [stupid_enemy.generate_enemy(W, H) for _ in range(4)] + \
               [very_stupid_enemy.generate_enemy(W, H) for _ in range(10)] + \
-              [archer_enemy.generate_enemy(W, H, player, min_respawn_distance) for _ in range(5)] + \
+              [archer_enemy.generate_enemy(W, H) for _ in range(5)] + \
               [TNT_guy_enemy.generate_enemy(W, H) for _ in range(4)]
     start_time = time.time()
 
@@ -77,8 +76,6 @@ while True:
                 raise RuntimeError("unknown enemy")
         if (e.check_collision_with_player(player)):
             temp_time = time.time() - start_time
-            if temp_time < 0.5:
-                print(e)
             p_size = game_over(time.time() - start_time)
             if p_size is not None:
                 reset(p_size)
@@ -94,9 +91,9 @@ while True:
                 case "very_stupid_enemy":
                     enemies.append(very_stupid_enemy.generate_enemy(W, H))
                 case "stupid_enemy":
-                    enemies.append(stupid_enemy.generate_enemy(W, H, player, min_respawn_distance))
+                    enemies.append(stupid_enemy.generate_enemy(W, H))
                 case "archer_enemy":
-                    enemies.append(archer_enemy.generate_enemy(W, H, player, min_respawn_distance))
+                    enemies.append(archer_enemy.generate_enemy(W, H))
                 case "TNT_guy_enemy":
                     enemies.append(TNT_guy_enemy.generate_enemy(W, H))
 

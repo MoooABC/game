@@ -4,8 +4,6 @@ from tkinter import messagebox
 import sys
 
 def game_over(time):
-    if time < 0.5:
-        print("instant death")
     pygame.init()
 
     pygame.mouse.set_visible(False)
@@ -86,6 +84,9 @@ def game_over(time):
                     current_cursor = img_cursor_text
 
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                is_running = False
+
             ui_manager.process_events(event)
             if event.type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == button_play_again:

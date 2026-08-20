@@ -1,4 +1,4 @@
-import pygame, random, math
+import pygame, random
 from arrow import arrow
 from enemy import enemy
 from SpriteSheet import SpriteSheet
@@ -99,9 +99,6 @@ class archer_enemy(enemy):
             arrow.draw(screen)
         screen.blit(trimmed_image, (self.pos.x, self.pos.y))
 
-    def generate_enemy(W:int, H:int, player, min_distance):
+    def generate_enemy(W:int, H:int):
         r = 40
-        e =  archer_enemy(random.randint(r, W), random.choice([r, H-r]), r, (random.random()+0.2) * 7)
-        while math.sqrt((player.pos.x - e.pos.x)**2 + (player.pos.y - e.pos.y)** 2) <= min_distance:
-            e = archer_enemy(random.randint(r, W), random.choice([r, H-r]), r, (random.random()+0.2) * 7)
-        return e
+        return archer_enemy(random.randint(r, W), random.choice([r, H-r]), r, (random.random()+0.1) * 7)
