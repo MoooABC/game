@@ -1,3 +1,5 @@
+import math
+
 import pygame, random
 from enemy import enemy
 from SpriteSheet import SpriteSheet
@@ -42,6 +44,9 @@ class stupid_enemy(enemy):
 
         screen.blit(trimmed_image, (self.pos.x, self.pos.y))
 
-    def generate_enemy(W:int, H:int):
+    def generate_enemy(W:int, H:int, player, min_distance):
         r = 40
-        return stupid_enemy(random.randint(r, W-r), random.choice([r, H-r]), r, 100)
+        e = stupid_enemy(random.randint(r, W-r), random.choice([r, H-r]), r, 100)
+        while math.sqrt((player.pos.x - e.pos.x)**2 + (player.pos.y - e.pos.y)** 2) <= min_distance:
+            e = stupid_enemy(random.randint(r, W-r), random.choice([r, H-r]), r, 100)
+        return e
